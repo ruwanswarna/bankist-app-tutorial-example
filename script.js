@@ -269,8 +269,9 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-const displayMovements = function (acc) {
+const displayMovements = function (acc, sort = false) {
   containerMovements.innerHTML = ''; //empty content inside containerMovements
+  const mov = sort ? acc.movements.sort((a, b) => a - b) : acc.movements;
   acc.movements.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
     const html = `
@@ -380,9 +381,23 @@ btnTransfer.addEventListener('click', function (e) {
   console.log(currentAccount);
 });
 
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+  const amount = Number(inputLoanAmount.value);
+  inputLoanAmount.value = '';
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount / 10)) {
+    // add movement
+    currentAccount.movements.push(amount);
+    //
+    updateUI(currentAccount);
+  }
+
+  console.log(loanApproved ? 'Loan Approved' : null);
+});
+
 btnClose.addEventListener('click', function (e) {
   e.preventDefault();
-  console.log('Delete'); 
+  console.log('Delete');
   if (
     inputCloseUsername.value === currentAccount.username &&
     Number(inputClosePin.value) === currentAccount.pin
@@ -393,9 +408,16 @@ btnClose.addEventListener('click', function (e) {
     //Delete account
     accounts.splice(index, 1);
     //Hide UI
-    containerApp,style.opacity = 0;
+    containerApp, (style.opacity = 0);
   }
   inputCloseUsername = inputClosePin = '';
+});
+
+let sorted = false;
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+  displayMovements(currentAccount, !sorted);
+  sorted = !sorted;
 });
 
 ///////////////NOTES/////////////////////
@@ -408,3 +430,109 @@ btnClose.addEventListener('click', function (e) {
 // console.log(account);
 
 //the findIndex() method
+
+//some() and every() method
+console.log(account1.movements);
+
+//EQUALITY
+console.log(account1.movements.includes(-130));
+
+//CONDITION
+//some method - returns true if at least one element satisfy the condition
+console.log(account1.movements.some(mov => mov === -130));
+const anyDeposites = account1.movements.some(mov => mov > 5000);
+console.log(anyDeposites);
+
+//every method - returns true only if every element satisfy the condition
+console.log(account1.movements.every(mov => mov > 0));
+console.log(account4.movements.every(mov => mov > 0));
+
+//Separate callback - we can now reuse same callback function
+const deposit = mov => mov > 0;
+console.log(account1.movements.some(deposit));
+console.log(account1.movements.every(deposit));
+console.log(account1.movements.filter(deposit));
+
+// forEach() - loop over an array
+// map() - map each value into different value and return an array
+// filter() - filter an array based on condition an return an array
+// reduce() - reduce an array into a single value
+// find() - find an element in the array that pass a condition
+// findIndex() - find the index of the arry element that pass a condition
+// some() - returns true if there is an element that pass the condition
+// every() - returns true if every element pass the condition
+
+//flat() and flatMap() methods
+//flat
+const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+// const [p1,p2,...others] = arr;
+// const newArr = [...p1,...p2,...others];
+// console.log(newArr);
+
+console.log(arr.flat()); // flat() removes nested array structures but keep values (flattens array)
+
+const arrDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8];
+console.log(arrDeep.flat()); //this goes only one level deep
+console.log(arrDeep.flat(2)); //argument gives number of levels that should be flatten
+
+const accountMovements = accounts.map(acc => acc.movements);
+console.log(accountMovements);
+const allMovements = accountMovements.flat();
+console.log(allMovements);
+const globalBalance = allMovements.reduce((acc, mov) => acc + mov, 0);
+console.log(globalBalance);
+
+//with method chaining
+const overallBalance = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc, mov) => mov + acc, 0);
+console.log(overallBalance);
+
+//NOTE   flatmap() method
+//flatMap() combines flat() and map()
+const overallBalance2 = accounts
+  .flatMap(acc => acc.movements) //flatMap here only go one level deep and we can not change it. If you need to go deeper still need to use flat method
+  .reduce((acc, mov) => mov + acc, 0);
+console.log(overallBalance2);
+
+//Sorting arrays
+//Strings
+const owners = ['Jonas', 'Zach', 'Adam', 'Martha'];
+console.log(owners.sort());
+console.log(owners); //original array is also sorted
+
+//Numbers
+console.log(account1.movements.sort()); //Does not sort numbers properly
+console.log(account1.movements); //because it does sorting based on strings
+
+//We can fix this
+//By passing in a compare callback function into the sort method
+
+//return < 0  ---> [A,B] (keep order)
+//return > 0   ---> [B,A] (Switch order)
+
+//Ascending
+account1.movements.sort((a, b) => {
+  // a - current value, b - next value
+  if (a > b) return 1;
+  if (a < b) return -1;
+});
+console.log(account1.movements);
+
+//Descending
+account1.movements.sort((a, b) => {
+  // a - current value, b - next value
+  if (a > b) return -1;
+  if (a < b) return 1;
+});
+console.log(account1.movements);
+//the above method will also work with strings
+
+//We can improve this code with math
+//Ascending Order
+account1.movements.sort((a, b) => a - b);
+console.log(account1.movements);
+//Descending Order
+account1.movements.sort((a, b) => b - a);
+console.log(account1.movements);
