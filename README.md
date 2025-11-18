@@ -4,18 +4,12 @@ A modern, minimalistic banking interface originally created by Jonas Schmedtmann
 
 This project simulates basic banking operations such as transferring money, requesting loans, and viewing transaction history — all using pure JavaScript.
 
-Core Banking Functionalities
-
+## Features
+### Core Banking Functionalities
 Login system (username + pin)
-
 View account balance
-
 Display transaction history (movements)
-
 Deposit & withdrawal simulation
-
 Money transfer between accounts
-
 Loan request simulation
-
 Account closure option
