@@ -13,3 +13,9 @@ This project simulates basic banking operations such as transferring money, requ
   + Money transfer between accounts<br />
   + Loan request simulation<br />
   + Account closure option<br />
+
+## Test Accounts
+| Username | PIN  |
+|----------|------|
+| js       | 1111 |
+| jd       | 2222 |
