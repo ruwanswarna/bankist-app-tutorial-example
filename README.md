@@ -17,5 +17,8 @@ This project simulates basic banking operations such as transferring money, requ
 ## Test Accounts
 | Username | PIN  |
 |----------|------|
-| js       | 1111 |
+| ar       | 1111 |
 | jd       | 2222 |
+
+## UI
+
