@@ -21,4 +21,4 @@ This project simulates basic banking operations such as transferring money, requ
 | jd       | 2222 |
 
 ## UI
-
+![App Screenshot](bankistUI.png)
