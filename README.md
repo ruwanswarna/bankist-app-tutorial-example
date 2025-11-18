@@ -6,10 +6,10 @@ This project simulates basic banking operations such as transferring money, requ
 
 ## Features
 ### Core Banking Functionalities
-Login system (username + pin)
-View account balance
-Display transaction history (movements)
-Deposit & withdrawal simulation
-Money transfer between accounts
-Loan request simulation
-Account closure option
+  + Login system (username + pin)<br />
+  + View account balance<br />
+  + Display transaction history (movements)<br />
+  + Deposit & withdrawal simulation<br />
+  + Money transfer between accounts<br />
+  + Loan request simulation<br />
+  + Account closure option<br />
